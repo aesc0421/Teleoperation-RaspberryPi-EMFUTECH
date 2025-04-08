@@ -5,14 +5,8 @@ import web_rtc_server
 import socket
 import signal
 from aiohttp import web
+import imu
 
-# Try to import IMU module, but handle the case when running on non-RPi systems
-try:
-    import imu
-    IMU_AVAILABLE = True
-except ImportError:
-    print("IMU module could not be imported. IMU functionality will be disabled.")
-    IMU_AVAILABLE = False
 
 def get_ip_address():
     try:

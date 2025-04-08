@@ -45,7 +45,6 @@ def publish_imu_data(mpu, client, topic, interval=1):
             "gyroscope": gyro
         }
         
-        print("Publishing: ", payload)
         client.publish(topic, json.dumps(payload))
         
         time.sleep(interval)
