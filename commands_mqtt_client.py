@@ -1,5 +1,21 @@
 import paho.mqtt.client as mqtt
 import json
+import socket
+
+# Get local IP address
+def get_local_ip():
+    try:
+        # Create a socket that connects to an external server
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        # Doesn't actually send data
+        s.connect(("8.8.8.8", 80))
+        # Get the local IP address used for the connection
+        local_ip = s.getsockname()[0]
+        s.close()
+        return local_ip
+    except Exception as e:
+        print(f"Error getting local IP: {e}")
+        return "localhost"  # Fallback to localhost
 
 # Called when the client connects to the broker
 def on_connect(client, userdata, flags, reason_code, properties=None):
@@ -20,7 +36,12 @@ def on_message(client, userdata, msg):
         print("Error decoding message:", e)
         return None
 
-def create_mqtt_client(broker_address="192.168.0.236", port=1884, keepalive=60):
+def create_mqtt_client(broker_address=None, port=1883, keepalive=60):
+    # Use the local IP if no broker address is provided
+    if broker_address is None:
+        broker_address = get_local_ip()
+        print(f"Using local IP as broker address: {broker_address}")
+    
     # Create the MQTT client
     client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
     
