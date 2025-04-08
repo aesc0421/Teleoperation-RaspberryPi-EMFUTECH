@@ -30,9 +30,8 @@ def run_mqtt_client():
 # Function to run the IMU sensor in a separate thread
 def run_imu_sensor():
     print("Starting IMU sensor...")
-    if IMU_AVAILABLE:
-        mpu, client, topic = imu.setup_imu()
-        imu.publish_imu_data(mpu, client, topic)
+    mpu, client, topic = imu.setup_imu()
+    imu.publish_imu_data(mpu, client, topic)
 
 # Asynchronous function to run the WebRTC server
 async def start_webrtc_server(stop_event: asyncio.Event):
