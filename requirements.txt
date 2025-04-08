@@ -1,0 +1,14 @@
+# MPU6050 sensor library
+mpu6050-raspberrypi
+
+# MQTT client for communication
+paho-mqtt>=2.0.0
+
+# WebRTC and video streaming
+aiortc
+av
+aiohttp
+aiohttp_cors
+
+# OpenCV for camera handling
+opencv-python 
