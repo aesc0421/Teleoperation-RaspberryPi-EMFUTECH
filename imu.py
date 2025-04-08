@@ -2,9 +2,28 @@ import mpu6050
 import time
 import json
 import paho.mqtt.client as mqtt
+import socket
 
-def setup_imu(broker_address="192.168.0.143", topic="sensors/imu"):
+def get_local_ip():
+    """Get the local IP address of the device."""
+    try:
+        # Create a socket to a common external server
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        # We don't actually need to send data
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+        s.close()
+        return ip
+    except Exception as e:
+        print(f"Error determining local IP: {e}")
+        return "localhost"
+
+def setup_imu(broker_address=None, topic="raspberry/imu"):
     mpu6050_sensor = mpu6050.mpu6050(0x68)
+    
+    # Use the local IP if no broker address is provided
+    if broker_address is None:
+        broker_address = get_local_ip()
     
     client = mqtt.Client(protocol=mqtt.MQTTv5)
     client.connect(broker_address)
