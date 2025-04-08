@@ -2,10 +2,17 @@ import asyncio
 import threading
 import commands_mqtt_client
 import web_rtc_server
-import imu 
-from aiohttp import web
 import socket
 import signal
+from aiohttp import web
+
+# Try to import IMU module, but handle the case when running on non-RPi systems
+try:
+    import imu
+    IMU_AVAILABLE = True
+except ImportError:
+    print("IMU module could not be imported. IMU functionality will be disabled.")
+    IMU_AVAILABLE = False
 
 def get_ip_address():
     try:
@@ -29,8 +36,9 @@ def run_mqtt_client():
 # Function to run the IMU sensor in a separate thread
 def run_imu_sensor():
     print("Starting IMU sensor...")
-    mpu, client, topic = imu.setup_imu()
-    imu.publish_imu_data(mpu, client, topic)
+    if IMU_AVAILABLE:
+        mpu, client, topic = imu.setup_imu()
+        imu.publish_imu_data(mpu, client, topic)
 
 # Asynchronous function to run the WebRTC server
 async def start_webrtc_server(stop_event: asyncio.Event):
@@ -86,4 +94,4 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"Error: {e}")
     finally:
-        print("✅ All services have been stopped correctly.")
+        print("All services have been stopped correctly.")
