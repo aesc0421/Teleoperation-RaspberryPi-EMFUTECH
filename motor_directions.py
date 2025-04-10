@@ -60,3 +60,36 @@ def stop_movement():
     IN2_2.off()
     IN3_1.off()
     IN3_2.off()
+
+def stop_rigth():
+    PWM3.off()
+def stop_left():
+    PWM2.off()
+
+def right(direction, value):
+    value = abs(value)
+    if direction == "forward":
+        IN3_1.off()
+        IN3_2.on()
+    elif direction == "backward":
+        IN3_1.on()
+        IN3_2.off()
+    else:
+        IN3_1.off()
+        IN3_2.off()
+        value = 0
+    PWM3.value = value
+
+def left(direction, value):
+    value = abs(value)
+    if direction == "forward":
+        IN2_1.off()
+        IN2_2.on()
+    elif direction == "backward":
+        IN2_1.on()
+        IN2_2.off()
+    else:
+        IN2_1.off()
+        IN2_2.off()
+        value = 0
+    PWM2.value = value

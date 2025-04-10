@@ -31,19 +31,19 @@ def on_message(client, userdata, msg):
     try:
         payload = json.loads(msg.payload.decode())
         print(f"{payload} Commands MQTT file ")
-        #You can add additional logic here to handle different commands
-        direction = payload.get("wheel_direction")
-        value = payload.get("value")
+        R_pedal = payload.get("right_pedal")
+        L_pedal = payload.get("left_pedal")
+        direction = payload.get("direction")
         arm = payload.get("arm_direction")
-        match direction:
-            case "forward":
-                motor_directions.forward(value)
-            case "backward":
-                motor_directions.back(value)
-            case "stop":
-                motor_directions.stop_movement()
-            case _:
-                print("Invalid WHeel.............")
+
+        if(R_pedal < 0 ):
+            motor_directions.right(direction,R_pedal)
+        else:
+            motor_directions.stop_rigth()
+        if(L_pedal < 0):
+            motor_directions.left(direction,L_pedal)
+        else:
+            motor_directions.stop_left()
         match arm:
             case "up":
                 motor_directions.Up()
