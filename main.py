@@ -33,6 +33,10 @@ def run_imu_sensor():
     mpu, client, topic = imu.setup_imu()
     imu.publish_imu_data(mpu, client, topic)
 
+# def run_motors():
+#     print("Starting motors...")
+#     run_mqtt_clien()
+
 # Asynchronous function to run the WebRTC server
 async def start_webrtc_server(stop_event: asyncio.Event):
     ip_address = get_ip_address()
@@ -76,8 +80,8 @@ async def main():
     mqtt_thread.start()
     
     # Start IMU sensor in a separate thread
-    imu_thread = threading.Thread(target=run_imu_sensor, daemon=True)
-    imu_thread.start()
+    # imu_thread = threading.Thread(target=run_imu_sensor, daemon=True)
+    # imu_thread.start()
 
     await start_webrtc_server(stop_event)
 

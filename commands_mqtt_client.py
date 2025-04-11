@@ -1,6 +1,7 @@
 import paho.mqtt.client as mqtt
 import json
 import socket
+import motor_directions
 
 # Get local IP address
 def get_local_ip():
@@ -29,9 +30,30 @@ def on_connect(client, userdata, flags, reason_code, properties=None):
 def on_message(client, userdata, msg):
     try:
         payload = json.loads(msg.payload.decode())
-        print(payload)
-        # You can add additional logic here to handle different commands
-        return payload
+        print(f"{payload} Commands MQTT file ")
+        R_pedal = payload.get("right_pedal")
+        L_pedal = payload.get("left_pedal")
+        direction = payload.get("direction")
+        arm = payload.get("arm_direction")
+
+        if(R_pedal < 0 ):
+            motor_directions.right(direction,R_pedal)
+        else:
+            motor_directions.stop_rigth()
+        if(L_pedal < 0):
+            motor_directions.left(direction,L_pedal)
+        else:
+            motor_directions.stop_left()
+        match arm:
+            case "up":
+                motor_directions.Up()
+            case "down":
+                motor_directions.Down()
+            case "stop":
+                motor_directions.Stop()
+            case _:
+                print("Invalid arm direction.........")
+
     except Exception as e:
         print("Error decoding message:", e)
         return None
@@ -48,10 +70,11 @@ def create_mqtt_client(broker_address=None, port=1883, keepalive=60):
     # Set up event handlers
     client.on_connect = on_connect
     client.on_message = on_message
+    # todo send to motors functtion pene pene 
+    print("message")
     
     # Connect to broker
     client.connect(broker_address, port, keepalive)
-    
     return client
 
 def start_mqtt_loop(client):
