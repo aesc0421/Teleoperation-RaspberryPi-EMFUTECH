@@ -1,6 +1,7 @@
 import paho.mqtt.client as mqtt
 import json
 import socket
+import command_parse_service
 
 # Get local IP address
 def get_local_ip():
@@ -30,10 +31,7 @@ def on_message(client, userdata, msg):
     try:
         payload = json.loads(msg.payload.decode())
         print(f"{payload} Commands MQTT file ")
-        R_pedal = payload.get("right_pedal")
-        L_pedal = payload.get("left_pedal")
-        direction = payload.get("direction")
-        arm = payload.get("arm_direction")
+        command_parse_service.get_command(payload)
     except Exception as e:
         print("Error decoding message:", e)
         return None
