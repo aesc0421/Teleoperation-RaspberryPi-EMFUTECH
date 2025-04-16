@@ -13,19 +13,19 @@ def get_command(payload):
            excavator_command(R_pedal,L_pedal,direction,arm)
 
 def bulldozer_command(R_pedal,L_pedal,direction,arm):
-    if(R_pedal < 0 ):
+    if(R_pedal > 0 ):
             bulldozer.right(direction,R_pedal)
     else:
             bulldozer.stop_rigth()
-    if(L_pedal < 0):
+    if(L_pedal > 0):
             bulldozer.left(direction,L_pedal)
     else:
             bulldozer.stop_left()     
     match arm:
         case "up":
-                bulldozer.Up()
-        case "down":
                 bulldozer.Down()
+        case "down":
+                bulldozer.Up()
         case "stop":
                 bulldozer.Stop()
         case _:

@@ -6,7 +6,7 @@ import socket
 import signal
 from aiohttp import web
 import imu
-
+import ping_server
 
 def get_ip_address():
     try:
@@ -82,7 +82,8 @@ async def main():
     # Start IMU sensor in a separate thread
     # imu_thread = threading.Thread(target=run_imu_sensor, daemon=True)
     # imu_thread.start()
-
+    flask_thread = threading.Thread(target=ping_server.run_flask_server, daemon=True)
+    flask_thread.start()
     await start_webrtc_server(stop_event)
 
 if __name__ == "__main__":
