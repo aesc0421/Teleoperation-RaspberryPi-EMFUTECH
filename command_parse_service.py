@@ -73,9 +73,9 @@ def excavator_command(arm_axis_1,arm_axis_2,arm_bucket,direction,rotation, R_ped
                 excavator.Stop()
     match rotation:
         case "left":
-                excavator.left(direction,rotation)
+                excavator.rotate_left()
         case "right":
-                excavator.right(direction,rotation)
+                excavator.rotate_right()
         case "stop":
                 excavator.stop_movement()
         case _:
