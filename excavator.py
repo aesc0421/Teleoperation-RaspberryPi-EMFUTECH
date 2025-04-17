@@ -26,130 +26,148 @@ PWM7 = PWMOutputDevice(15)
 PWM7_IN3_3 = DigitalOutputDevice(16)
 PWM7_IN4_3 = DigitalOutputDevice(20)
 
-generalSpeed = 0.2
+generalSpeed = 1
+timeSleep = 0.02
 
 def move_axis1_Up():
+    print("UPPP")
     IN1.on()
     IN2.off()
     PWM.value = generalSpeed
+    sleep(timeSleep)
+           
 def move_axis1_Down():
+    print("downn")
     IN1.off()
     IN2.on()
     PWM.value = generalSpeed
+    sleep(timeSleep)
+            
 def Stop():
-    PWM.off()
-    IN1.off()
-    IN2.off()
-    IN2_1.off()
-    IN2_2.off()
-    IN3_1.off()
-    IN3_2.off()
-    PWM5_IN3_2.off()
-    PWM5_IN4_2.off()
-    PWM6_IN1_3.off() 
-    PWM6_IN2_3.off()
-    PWM7_IN3_3.off()
-    PWM7_IN4_3.off()
+            PWM.off()
+            IN1.off()
+            IN2.off()
+            IN2_1.off()
+            IN2_2.off()
+            IN3_1.off()
+            IN3_2.off()
+            PWM5_IN3_2.off()
+            PWM5_IN4_2.off()
+            PWM6_IN1_3.off() 
+            PWM6_IN2_3.off()
+            PWM7_IN3_3.off()
+            PWM7_IN4_3.off()
 
 
 def back(value):
-    IN2_1.on()
-    IN2_2.off()
-    IN3_1.on()
-    IN3_2.off()
-    value = abs(value)
-    PWM2.value = value
-    PWM3.value = value
+            IN2_1.on()
+            IN2_2.off()
+            IN3_1.on()
+            IN3_2.off()
+            value = abs(value)
+            PWM2.value = value
+            PWM3.value = value
 
 def forward(value):
-    IN2_1.off()
-    IN2_2.on()
-    IN3_1.off()
-    IN3_2.on()
-    value = abs(value)
-    PWM2.value = value
-    PWM3.value = value
+            IN2_1.off()
+            IN2_2.on()
+            IN3_1.off()
+            IN3_2.on()
+            value = abs(value)
+            PWM2.value = value
+            PWM3.value = value
 
 def stop_movement():
-    PWM2.off()
-    PWM3.off()
-    IN2_1.off()
-    IN2_2.off()
-    IN3_1.off()
-    IN3_2.off()
+            PWM2.off()
+            PWM3.off()
+            IN2_1.off()
+            IN2_2.off()
+            IN3_1.off()
+            IN3_2.off()
 
 def stop_rigth():
-    PWM3.off()
+            PWM3.off()
 def stop_left():
-    PWM2.off()
+            PWM2.off()
 
 def right(direction, value):
-    value = abs(value)
-    if direction == "forward":
-        IN3_1.off()
-        IN3_2.on()
-    elif direction == "backward":
-        IN3_1.on()
-        IN3_2.off()
-    else:
-        IN3_1.off()
-        IN3_2.off()
-        value = 0
-    PWM3.value = value
+            value = abs(float(value))
+            if direction == "forward":
+                IN3_1.off()
+                IN3_2.on()
+            elif direction == "backward":
+                IN3_1.on()
+                IN3_2.off()
+            else:
+                IN3_1.off()
+                IN3_2.off()
+                value = 0
+            PWM3.value = value
+            sleep(timeSleep)
 
 def left(direction, value):
-    value = abs(value)
-    if direction == "forward":
-        IN2_1.off()
-        IN2_2.on()
-    elif direction == "backward":
-        IN2_1.on()
-        IN2_2.off()
-    else:
-        IN2_1.off()
-        IN2_2.off()
-        value = 0
-    PWM2.value = value
+            value = abs(float(value))
+            if direction == "forward":
+                IN2_1.off()
+                IN2_2.on()
+            elif direction == "backward":
+                IN2_1.on()
+                IN2_2.off()
+            else:
+                IN2_1.off()
+                IN2_2.off()
+                value = 0
+            PWM2.value = value
+            sleep(timeSleep)
 
 def rotate_right():
-   PWM5_IN3_2.on()
-   PWM5_IN4_2.off()
-   PWM5.value = generalSpeed
-   
+            PWM5_IN3_2.on()
+            PWM5_IN4_2.off()
+            PWM5.value = generalSpeed
+            sleep(timeSleep)
+        
 def rotate_left():
-   PWM5_IN3_2.off()
-   PWM5_IN4_2.on()
-   PWM5.value = generalSpeed
+            PWM5_IN3_2.off()
+            PWM5_IN4_2.on()
+            PWM5.value = generalSpeed
+            sleep(timeSleep)
 
 def move_bucket_up():
-    PWM6_IN1_3.on()
-    PWM6_IN2_3.off()
-    PWM6.value = generalSpeed
+            PWM6_IN1_3.on()
+            PWM6_IN2_3.off()
+            PWM6.value = generalSpeed
+            sleep(timeSleep)
 
 def move_bucket_down():
-    PWM6_IN1_3.off()
-    PWM6_IN2_3.on()
-    PWM6.value = generalSpeed
+            PWM6_IN1_3.off()
+            PWM6_IN2_3.on()
+            PWM6.value = generalSpeed
+            sleep(timeSleep)
 
 def move_axis2_up():
-    PWM7_IN3_3.on()
-    PWM7_IN4_3.off()
-    PWM7.value = generalSpeed
+            print("moving 1")
+            PWM7_IN3_3.on()
+            PWM7_IN4_3.off()
+            PWM7.value = generalSpeed
+            sleep(timeSleep)
 
 def move_axis2_down():
-    PWM7_IN3_3.off()
-    PWM7_IN4_3.on()
-    PWM7.value = generalSpeed
+            print("moving 2")
+            PWM7_IN3_3.off()
+            PWM7_IN4_3.on()
+            PWM7.value = generalSpeed
+            sleep(timeSleep)
+
 # try:
 #       while True:
 #         opcion = input("Ingresa dirección (1=arriba, 2=abajo, 3=adelante, 5=rotacion, 4=atras, 6=pala upm 7=pala down, arm2 up =8, arm2 down = 9 0=detener,): ")
 
 #         if opcion == "1":
 #             PWM.value = 0.2
-#             Up()
+#             move_axis1_Up()
 #         elif opcion == "2":
 #             PWM.value = 0.2
-#             Down()
+#             move_axis1_Down()
 #         elif opcion == "0":
 #             Stop()
 #             stop_movement()
@@ -161,13 +179,13 @@ def move_axis2_down():
 #             PWM3.value = 0.2
 #             back()
 #         elif opcion == "6":
-#             move_pala_up()
+#             move_bucket_up()
 #         elif opcion == "7":
-#             move_pala_down()
+#             move_bucket_down()
 #         elif opcion == "8":
-#             move_brazo_forward()
+#             move_axis2_down()
 #         elif opcion == "9":
-#             move_brazo_backward()
+#             move_axis2_up()
 #         elif opcion == "5":
 #             rotate_right()
 #         elif opcion == "a":

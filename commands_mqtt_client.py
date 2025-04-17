@@ -2,7 +2,7 @@ import paho.mqtt.client as mqtt
 import json
 import socket
 import command_parse_service
-
+import excavator
 # Get local IP address
 def get_local_ip():
     try:

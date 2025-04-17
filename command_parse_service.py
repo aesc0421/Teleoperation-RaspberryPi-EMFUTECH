@@ -1,5 +1,10 @@
-import bulldozer
-import excavator
+import main
+local_ip = main.get_ip_address()
+if(local_ip == "192.168.179.21"):
+        import excavator
+else:
+        import bulldozer
+
 
 def get_command(payload):
     R_pedal = payload.get("right_pedal")
@@ -14,7 +19,8 @@ def get_command(payload):
     if(vehicle == "bulldozer"):
            bulldozer_command(R_pedal,L_pedal,direction,arm)
     else:
-           excavator_command(arm_axis_1,arm_axis_2,arm_bucket,direction,rotation, R_pedal,L_pedal)
+           print("excavator")
+    excavator_command(arm_axis_1,arm_axis_2,arm_bucket,direction,rotation, R_pedal,L_pedal)
 
 def bulldozer_command(R_pedal,L_pedal,direction,arm):
     if(R_pedal > 0 ):
@@ -37,7 +43,6 @@ def bulldozer_command(R_pedal,L_pedal,direction,arm):
     
 def excavator_command(arm_axis_1,arm_axis_2,arm_bucket,direction,rotation, R_pedal,L_pedal):
     if(R_pedal < 0 ):
-            
             excavator.right(direction,R_pedal)
     else:
             excavator.stop_rigth()
