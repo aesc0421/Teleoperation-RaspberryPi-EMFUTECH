@@ -1,16 +1,18 @@
-from keras.models import load_model  # TensorFlow is required for Keras to work
-import cv2  # Install opencv-python
+import tensorflow as tf  # Importa TensorFlow directamente
+import cv2
 import numpy as np
 
-# Disable scientific notation for clarity
 np.set_printoptions(suppress=True)
 
-# Load the model
-model = load_model("keras_Model.h5", compile=False)
 
-# Load the labels
-class_names = open("labels.txt", "r").readlines()
+model = tf.keras.load(
+    "converted_savedmodel/model.savedmodel",
+    call_endpoint="serving_default"
+)
 
+
+
+class_names = open("converted_savedmodel/labels.txt", "r").readlines()
 # CAMERA can be 0 or 1 based on default camera of your computer
 camera = cv2.VideoCapture(0)
 
@@ -49,3 +51,4 @@ while True:
 
 camera.release()
 cv2.destroyAllWindows()
+
