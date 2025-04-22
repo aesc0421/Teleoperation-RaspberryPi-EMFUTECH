@@ -120,7 +120,7 @@ def left(direction, value):
             PWM2.value = value
             sleep(timeSleep)
 
-def rotate_right():
+def rotate_right():                                     
             PWM5_IN3_2.on()
             PWM5_IN4_2.off()
             PWM5.value = generalSpeed

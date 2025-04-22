@@ -41,10 +41,11 @@ def publish_imu_data(mpu, client, topic, interval=1):
         accel, gyro = read_sensor_data(mpu)
         
         payload = {
+            "vehicle":"excavator",
             "accelerometer": accel,
             "gyroscope": gyro
         }
-        
+        print("payload", payload)
         client.publish(topic, json.dumps(payload))
         
         time.sleep(interval)
