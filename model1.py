@@ -1,18 +1,14 @@
-import tensorflow as tf  # Importa TensorFlow directamente
+from keras.layers import TFSMLayer
 import cv2
 import numpy as np
 
 np.set_printoptions(suppress=True)
 
 
-model = tf.keras.load(
-    "converted_savedmodel/model.savedmodel",
-    call_endpoint="serving_default"
-)
+model = TFSMLayer("./model.savedmodel", call_endpoint="serving_default")
 
 
-
-class_names = open("converted_savedmodel/labels.txt", "r").readlines()
+class_names = open("./model.savedmodel/labels.txt", "r").readlines()
 # CAMERA can be 0 or 1 based on default camera of your computer
 camera = cv2.VideoCapture(0)
 
@@ -33,11 +29,11 @@ while True:
     image = (image / 127.5) - 1
 
     # Predicts the model
-    prediction = model.predict(image)
+    raw_output = model(image)  # dict
+    prediction = list(raw_output.values())[0].numpy()
     index = np.argmax(prediction)
-    class_name = class_names[index]
     confidence_score = prediction[0][index]
-
+    class_name = class_names[index]
     # Print prediction and confidence score
     print("Class:", class_name[2:], end="")
     print("Confidence Score:", str(np.round(confidence_score * 100))[:-2], "%")
