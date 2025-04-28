@@ -1,11 +1,13 @@
 import main
+import threading
 local_ip = main.get_ip_address()
 if(local_ip == "192.168.179.21"):
         import excavator
 else:
         import bulldozer
 
-
+threading.Thread(target=excavator.axis1_controller, daemon=True).start()
+global current_command 
 def get_command(payload):
     R_pedal = payload.get("right_pedal")
     L_pedal = payload.get("left_pedal")
@@ -52,7 +54,7 @@ def excavator_command(arm_axis_1,arm_axis_2,arm_bucket,direction,rotation, R_ped
             excavator.stop_left()     
     match arm_axis_1:
         case "up":
-                excavator.move_axis1_Up()
+                current_command =  'move_axis1_Up'
         case "down":
                 excavator.move_axis1_Down()
         case "stop":
