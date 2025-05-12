@@ -30,6 +30,14 @@ def setup_imu(broker_address=None, topic="raspberry/imu"):
     
     return mpu6050_sensor, client, topic
 
+def get_imu_data():
+    mpu = mpu6050.mpu6050(0x68)
+    while True:
+        accelerometer_data = mpu.get_accel_data()
+        gyroscope_data = mpu.get_gyro_data()
+        
+        return accelerometer_data, gyroscope_data
+    
 def read_sensor_data(mpu):
     accelerometer_data = mpu.get_accel_data()
     gyroscope_data = mpu.get_gyro_data()
@@ -44,7 +52,7 @@ def publish_imu_data(mpu, client, topic, interval=1):
             "accelerometer": accel,
             "gyroscope": gyro
         }
-        
+      #  print("pay",payload)
         client.publish(topic, json.dumps(payload))
         
         time.sleep(interval)

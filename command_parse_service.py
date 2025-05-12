@@ -1,5 +1,5 @@
 import bulldozer
-import excavator
+#import excavator
 
 def get_command(payload):
     R_pedal = payload.get("right_pedal")
@@ -17,11 +17,11 @@ def get_command(payload):
            excavator_command(arm_axis_1,arm_axis_2,arm_bucket,direction,rotation, R_pedal,L_pedal)
 
 def bulldozer_command(R_pedal,L_pedal,direction,arm):
-    if(R_pedal > 0 ):
+    if(R_pedal < 0 ):
             bulldozer.right(direction,R_pedal)
     else:
             bulldozer.stop_rigth()
-    if(L_pedal > 0):
+    if(L_pedal < 0):
             bulldozer.left(direction,L_pedal)
     else:
             bulldozer.stop_left()     

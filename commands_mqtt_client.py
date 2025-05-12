@@ -2,6 +2,7 @@ import paho.mqtt.client as mqtt
 import json
 import socket
 import command_parse_service
+import self_movement
 
 # Get local IP address
 def get_local_ip():
@@ -22,7 +23,8 @@ def get_local_ip():
 def on_connect(client, userdata, flags, reason_code, properties=None):
     if reason_code == mqtt.CONNACK_ACCEPTED:
         print("Connected to MQTT broker")
-        client.subscribe("raspberry/controls")  # Subscribe to your control topic
+        client.subscribe("raspberry/controls")
+        client.subscribe("grid/navigation")# Subscribe to your control topic
     else:
         print("Failed to connect, return code:", reason_code)
 
@@ -31,7 +33,14 @@ def on_message(client, userdata, msg):
     try:
         payload = json.loads(msg.payload.decode())
         print(f"{payload} Commands MQTT file ")
-        command_parse_service.get_command(payload)
+        if isinstance(payload, dict) and "path" in payload and "direction" in payload:
+            path = payload["path"]
+            direction = payload["direction"]
+            instructions = self_movement.path_to_instructions(path)
+            self_movement.follow_oriented_path(instructions)
+        else:
+            command_parse_service.get_command(payload)
+       
     except Exception as e:
         print("Error decoding message:", e)
         return None
@@ -48,12 +57,14 @@ def create_mqtt_client(broker_address=None, port=1883, keepalive=60):
     # Set up event handlers
     client.on_connect = on_connect
     client.on_message = on_message
-    # todo send to motors functtion pene pene 
+    # todo send to motors 
     print("message")
     
     # Connect to broker
     client.connect(broker_address, port, keepalive)
     return client
+
+
 
 def start_mqtt_loop(client):
     try:

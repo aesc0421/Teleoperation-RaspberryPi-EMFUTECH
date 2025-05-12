@@ -91,3 +91,23 @@ def left(direction, value):
         IN2_2.off()
         value = 0
     PWM2.value = value
+
+
+# try:
+#       while True:
+#         opcion = input("Ingresa dirección (1=arriba, 2=abajo, 3=adelante, 5=rotacion, 4=atras, 6=pala upm 7=pala down, arm2 up =8, arm2 down = 9 0=detener,): ")
+#         if opcion == "1":
+#             Up()
+#         elif opcion == "2":
+#             Down()
+#         elif opcion == "3":
+#             right("forward",0.5)
+#             left("forward",0.5)
+#         elif opcion == "4":
+#             right("backward",0.5)
+#             left("backward",0.5)
+#         elif opcion == "0":
+#             Stop()
+#             stop_movement()
+# except:
+#     print("exceptt")

@@ -41,10 +41,6 @@ try:
             print("1, 2 o 0.")
         
         sleep(0.1)
-
-   
-   
-
 except KeyboardInterrupt:
     print("\n⛔ Interrumpido por el usuario. Apagando motor.")
     PWM.off()
